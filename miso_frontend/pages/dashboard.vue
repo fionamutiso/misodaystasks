@@ -243,6 +243,10 @@ const handleLogout = async () => {
 onMounted(() => {
   loadTodos()
 })
+
+definePageMeta({
+  middleware: ['auth']
+})
 </script>
 
 <style scoped>

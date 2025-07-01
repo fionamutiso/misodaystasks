@@ -28,33 +28,6 @@ A beautiful Nuxt 3 to-do list application with a cherry blossom theme, featuring
 - **Language**: TypeScript
 - **UI**: Vue 3 Composition API
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v16 or higher)
-- npm or yarn
-
-### Installation
-
-1. Install dependencies:
-```bash
-npm install
-```
-
-2. Create environment file:
-```bash
-# Create .env file
-NUXT_PUBLIC_API_BASE=http://localhost:8000
-```
-
-3. Run development server:
-```bash
-npm run dev
-```
-
-4. Open your browser and navigate to `http://localhost:3000`
-
 ## Project Structure
 
 ```
@@ -126,6 +99,4 @@ The cherry blossom theme can be customized by modifying:
 3. Maintain the cherry blossom theme
 4. Test responsive design on different screen sizes
 
-## License
 
-This project is part of the Miso Days application.

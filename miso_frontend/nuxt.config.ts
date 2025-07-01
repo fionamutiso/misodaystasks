@@ -5,13 +5,9 @@ import tailwindcss from "@tailwindcss/vite"
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
-  
-  // CSS
   css: [
     '@/assets/css/main.css'
   ],
-  
-  // Vite configuration
   vite: {
     plugins: [
       tailwindcss()

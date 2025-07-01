@@ -134,7 +134,7 @@
             <!-- Register Button -->
             <button
               type="submit"
-              :disabled="loading || !form.acceptTerms || form.password !== form.confirmPassword"
+              :disabled="loading || form.password !== form.confirmPassword"
               class="w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white py-3 px-4 rounded-lg font-semibold hover:from-pink-600 hover:to-rose-600 transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               <span v-if="loading" class="flex items-center justify-center">
@@ -184,6 +184,7 @@ useHead({
 
 // Auth composable
 const { register } = useAuth()
+const { error: showError, success: showSuccess } = useNotification()
 
 // Form data
 const form = ref({
@@ -191,7 +192,6 @@ const form = ref({
   email: '',
   password: '',
   confirmPassword: '',
-  acceptTerms: false
 })
 
 const showPassword = ref(false)
@@ -201,7 +201,7 @@ const loading = ref(false)
 // Handle register
 const handleRegister = async () => {
   if (form.value.password !== form.value.confirmPassword) {
-    alert('Passwords do not match!')
+    showError('Passwords do not match!')
     return
   }
 
@@ -218,18 +218,20 @@ const handleRegister = async () => {
     const result = await register(userData)
     
     if (result.success) {
-      console.log('Registration successful!')
+      showSuccess('Registration successful!')
       await navigateTo('/dashboard')
     } else {
-      console.error('Registration failed:', result.error)
-      // TODO: Show error message to user
+      showError(result.error || 'Registration failed')
     }
     
   } catch (error) {
     console.error('Registration failed:', error)
+    showError('An unexpected error occurred')
   } finally {
     loading.value = false
   }
 }
+
+// No middleware needed for register page
 </script>
 

@@ -1,17 +1,11 @@
 <template>
-  <div>
+  <NuxtLayout>
     <NuxtPage />
-  </div>
+  </NuxtLayout>
 </template>
 
 <script setup>
 // Global app setup
-const { initAuth } = useAuth()
-
-// Initialize authentication on app start
-onMounted(() => {
-  initAuth()
-})
 </script>
 
 <style>

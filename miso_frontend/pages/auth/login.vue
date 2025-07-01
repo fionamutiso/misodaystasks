@@ -146,6 +146,7 @@ useHead({
 
 // Auth composable
 const { login } = useAuth()
+const { error: showError, success: showSuccess } = useNotification()
 
 // Form data
 const form = ref({
@@ -165,18 +166,20 @@ const handleLogin = async () => {
     const result = await login(form.value)
     
     if (result.success) {
-      console.log('Login successful!')
+      showSuccess('Login successful!')
       await navigateTo('/dashboard')
     } else {
-      console.error('Login failed:', result.error)
-      // TODO: Show error message to user
+      showError(result.error || 'Login failed')
     }
     
   } catch (error) {
     console.error('Login failed:', error)
+    showError('An unexpected error occurred')
   } finally {
     loading.value = false
   }
 }
+
+// No middleware needed for login page
 </script>
 
