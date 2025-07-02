@@ -92,11 +92,6 @@ The cherry blossom theme can be customized by modifying:
 - Gradient backgrounds
 - Component styling
 
-## Contributing
 
-1. Follow the existing code style
-2. Use TypeScript for type safety
-3. Maintain the cherry blossom theme
-4. Test responsive design on different screen sizes
 
 
