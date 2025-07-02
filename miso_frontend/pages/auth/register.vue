@@ -184,7 +184,6 @@ useHead({
 
 // Auth composable
 const { register } = useAuth()
-const { error: showError, success: showSuccess } = useNotification()
 
 // Form data
 const form = ref({
@@ -201,7 +200,6 @@ const loading = ref(false)
 // Handle register
 const handleRegister = async () => {
   if (form.value.password !== form.value.confirmPassword) {
-    showError('Passwords do not match!')
     return
   }
 
@@ -218,15 +216,11 @@ const handleRegister = async () => {
     const result = await register(userData)
     
     if (result.success) {
-      showSuccess('Registration successful!')
       await navigateTo('/dashboard')
-    } else {
-      showError(result.error || 'Registration failed')
     }
     
   } catch (error) {
     console.error('Registration failed:', error)
-    showError('An unexpected error occurred')
   } finally {
     loading.value = false
   }

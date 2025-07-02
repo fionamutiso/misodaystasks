@@ -143,10 +143,8 @@ useHead({
     { name: 'description', content: 'Sign in to your Miso Days account' }
   ]
 })
-
 // Auth composable
 const { login } = useAuth()
-const { error: showError, success: showSuccess } = useNotification()
 
 // Form data
 const form = ref({
@@ -166,15 +164,11 @@ const handleLogin = async () => {
     const result = await login(form.value)
     
     if (result.success) {
-      showSuccess('Login successful!')
       await navigateTo('/dashboard')
-    } else {
-      showError(result.error || 'Login failed')
     }
     
   } catch (error) {
     console.error('Login failed:', error)
-    showError('An unexpected error occurred')
   } finally {
     loading.value = false
   }

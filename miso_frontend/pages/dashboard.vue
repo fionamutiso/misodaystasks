@@ -1,20 +1,16 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-pink-50 via-white to-pink-100 relative overflow-hidden">
-    <!-- Cherry blossom petals background -->
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="petal petal-1"></div>
-      <div class="petal petal-2"></div>
-      <div class="petal petal-3"></div>
-      <div class="petal petal-4"></div>
-      <div class="petal petal-5"></div>
-    </div>
+
+     <div class="absolute top-0 left-0 w-72 h-72 bg-pink-500 rounded-full opacity-30 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 w-72 h-72 bg-pink-500 rounded-full opacity-30 blur-3xl"></div>
+    <div class="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-500 rounded-full opacity-20 blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
 
     <!-- Header -->
     <header class="relative z-10 bg-white/80 backdrop-blur-sm border-b border-pink-200">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center py-4">
           <div class="flex items-center space-x-3">
-            <div class="w-8 h-8 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full flex items-center justify-center">
+            <div class="w-8 h-8 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full flex items-center justify-center">
               <span class="text-white font-bold text-sm">M</span>
             </div>
             <h1 class="text-2xl font-bold text-pink-600">Miso Days</h1>
@@ -57,7 +53,7 @@
           </div>
           <button
             type="submit"
-            class="bg-gradient-to-r from-pink-500 to-rose-500 text-white px-6 py-3 rounded-lg font-semibold hover:from-pink-600 hover:to-rose-600 transform hover:scale-105 transition-all duration-300"
+            class="bg-pink-500  text-white px-6 py-3 rounded-lg font-semibold hover:bg-pink-700 transform hover:scale-105 transition-all duration-300"
           >
             Add Task
           </button>
@@ -71,11 +67,11 @@
           <div class="text-gray-600">Total Tasks</div>
         </div>
         <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-pink-100 text-center">
-          <div class="text-3xl font-bold text-green-600">{{ completedTodos }}</div>
+          <div class="text-3xl font-bold text-pink-600">{{ completedTodos }}</div>
           <div class="text-gray-600">Completed</div>
         </div>
         <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-pink-100 text-center">
-          <div class="text-3xl font-bold text-orange-600">{{ pendingTodos }}</div>
+          <div class="text-3xl font-bold text-pink-600">{{ pendingTodos }}</div>
           <div class="text-gray-600">Pending</div>
         </div>
       </div>
@@ -92,7 +88,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
             </svg>
           </div>
-          <p class="text-gray-500">No tasks yet. Add your first task above!</p>
+          <p class="text-gray-500">No tasks yet.</p>
         </div>
         
         <div v-else class="divide-y divide-pink-100">
@@ -144,7 +140,7 @@
               
               <button
                 @click="deleteTodo(todo.id)"
-                class="flex-shrink-0 text-gray-400 hover:text-red-500 transition-colors duration-200"
+                class="flex-shrink-0 text-gray-400 hover:text-pink-500 transition-colors duration-200"
               >
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
@@ -159,6 +155,7 @@
 </template>
 
 <script setup>
+
 // Set page title
 useHead({
   title: 'Dashboard - Miso Days',
@@ -250,35 +247,9 @@ definePageMeta({
 </script>
 
 <style scoped>
-.petal {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background: linear-gradient(45deg, #fbb6ce, #f687b3);
-  border-radius: 50% 0 50% 50%;
-  opacity: 0.4;
-  animation: float 8s ease-in-out infinite;
-}
 
-.petal-1 { top: 10%; left: 10%; animation-delay: 0s; }
-.petal-2 { top: 20%; right: 15%; animation-delay: 2s; }
-.petal-3 { top: 40%; left: 5%; animation-delay: 4s; }
-.petal-4 { top: 60%; right: 10%; animation-delay: 6s; }
-.petal-5 { bottom: 20%; left: 15%; animation-delay: 1s; }
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-    opacity: 0.4;
-  }
-  50% {
-    transform: translateY(-15px) rotate(180deg);
-    opacity: 0.6;
-  }
-}
-
-/* Custom gradient background */
+/* background nini= atee */
 .bg-gradient-to-br {
-  background: linear-gradient(135deg, #fdf2f8 0%, #ffffff 50%, #fce7f3 100%);
+  background: linear-gradient(135deg, #f0b2d4 0%, #f5f4f4 50%, #f7b2d9 100%);
 }
 </style> 

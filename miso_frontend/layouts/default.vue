@@ -1,8 +1,7 @@
-<template>
-  <div>
-    <slot />
-    <NotificationToast />
-  </div>
+<template> 
+    <div>
+      <NuxtPage />
+    </div>
 </template>
 
 <script setup>
