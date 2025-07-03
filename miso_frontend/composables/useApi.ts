@@ -1,3 +1,14 @@
+export async function fetchUsers(query: string | number = 1, perPage: number = 5) {
+  let url = '/api/users';
+  if (typeof query === 'string' && query.includes('=')) {
+    url += `?${query}`;
+  } else {
+    url += `?page=${query}&per_page=${perPage}`;
+  }
+  const { data } = await useFetch(url);
+  return data.value;
+}
+
 export const useApi = () => {
   const config = useRuntimeConfig()
   
@@ -52,4 +63,23 @@ export const useApi = () => {
     getUser,
     getCsrfToken
   }
+}
+
+export async function fetchCategories() {
+  const { data } = await useFetch('/api/categories');
+  return data.value;
+}
+
+export async function setUserCategory(categoryId: number) {
+  const token = localStorage.getItem('token');
+  const { data } = await useFetch('/api/users/set-category', {
+    method: 'POST',
+    body: { category_id: categoryId },
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+  return data.value;
 } 

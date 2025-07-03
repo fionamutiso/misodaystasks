@@ -59,7 +59,7 @@
           </button>
         </form>
       </div>
-
+     
       <!-- Todo Stats -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-pink-100 text-center">
@@ -75,6 +75,37 @@
           <div class="text-gray-600">Pending</div>
         </div>
       </div>
+
+      <div class="flex justify-center items-center gap-4 pb-4">
+        <button
+          @click="goPrevPage"
+          :disabled="page === 1"
+          class="px-6 py-2 rounded-full font-semibold transition-all duration-200
+                 bg-white/90 border border-pink-200 text-pink-600 shadow-md
+                 hover:bg-pink-100 hover:text-pink-700
+                 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Previous 
+        </button>
+        <span class="mx-2 text-pink-600 font-bold text-lg select-none">Page {{ page }}</span>
+        <button
+          @click="nextPage"
+          :disabled="!canGoNextPage"
+          class="px-6 py-2 rounded-full font-semibold transition-all duration-200
+                 bg-white/90 border border-pink-200 text-pink-600 shadow-md
+                 hover:bg-pink-100 hover:text-pink-700
+                 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+        >
+          Next 
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <ul class="mb-4">
+        <li v-for="user in users" :key="user.id" class="py-2 px-4 bg-white/60 rounded-lg mb-2 shadow-sm border border-pink-100 text-gray-700">
+          {{ user.name }}
+        </li>
+      </ul>
 
       <!-- Todo List -->
       <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-pink-100 overflow-hidden">
@@ -149,6 +180,30 @@
             </div>
           </div>
         </div>
+        <div v-if="showUserPagination" class="flex justify-between items-center px-6 py-2">
+          <button
+            v-if="page > 1"
+            @click="goPrevPage"
+            class="text-pink-500 text-xs font-semibold underline-offset-4 hover:underline transition-all duration-150 px-1 py-1 bg-transparent border-none shadow-none"
+          >
+            Prev
+          </button>
+          <span></span>
+          <button
+            v-if="canGoNextPage"
+            @click="nextPage"
+            class="text-pink-500 text-xs font-semibold underline-offset-4 hover:underline transition-all duration-150 px-1 py-1 ml-auto bg-transparent border-none shadow-none"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-pink-600 font-semibold mb-2">Filter by Category:</label>
+        <select v-model="selectedCategory" @change="changeCategory" class="border border-pink-200 rounded px-3 py-2">
+          <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
+        </select>
       </div>
     </main>
   </div>
@@ -244,6 +299,70 @@ onMounted(() => {
 definePageMeta({
   middleware: ['auth']
 })
+
+import { ref, watch, computed } from 'vue';
+import { fetchUsers, fetchCategories, setUserCategory } from '~/composables/useApi';
+
+const categories = ref([]);
+const selectedCategory = ref(null);
+
+const page = ref(1);
+const perPage = 5;
+const users = ref([]);
+const pagination = ref({});
+
+const canGoNextPage = computed(() => {
+  // Only allow going to next page if the current page is less than the last page from backend
+  return pagination.value && page.value < (pagination.value.last_page || 1);
+});
+
+function nextPage() {
+  if (canGoNextPage.value) {
+    page.value++;
+    loadUsers();
+  }
+}
+
+async function loadUsers() {
+  const params = { page: page.value, per_page: perPage };
+  if (selectedCategory.value) {
+    params.category_id = selectedCategory.value;
+  }
+  const query = new URLSearchParams(params).toString();
+  const response = await fetchUsers(query);
+  users.value = response.data;
+  pagination.value = response.meta;
+}
+
+watch([page, selectedCategory], loadUsers, { immediate: true });
+
+const showUserPagination = computed(() => page.value > 1 || canGoNextPage.value);
+
+function goPrevPage() {
+  if (page.value > 1) {
+    page.value--;
+    loadUsers();
+  }
+}
+
+async function loadCategories() {
+  categories.value = await fetchCategories();
+  if (user.value && user.value.category_id) {
+    selectedCategory.value = user.value.category_id;
+  }
+}
+
+async function changeCategory() {
+  if (selectedCategory.value) {
+    await setUserCategory(selectedCategory.value);
+    user.value.category_id = selectedCategory.value;
+  }
+}
+
+onMounted(() => {
+  loadTodos();
+  loadCategories();
+});
 </script>
 
 <style scoped>
