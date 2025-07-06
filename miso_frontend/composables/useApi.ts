@@ -65,21 +65,4 @@ export const useApi = () => {
   }
 }
 
-export async function fetchCategories() {
-  const { data } = await useFetch('/api/categories');
-  return data.value;
-}
-
-export async function setUserCategory(categoryId: number) {
-  const token = localStorage.getItem('token');
-  const { data } = await useFetch('/api/users/set-category', {
-    method: 'POST',
-    body: { category_id: categoryId },
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-  });
-  return data.value;
-} 
+ 

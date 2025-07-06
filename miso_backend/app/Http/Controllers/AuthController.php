@@ -59,31 +59,3 @@ class AuthController extends Controller
     }
 }
 
-// New UserController for user listing and pagination
-namespace App\Http\Controllers;
-
-use App\Models\User;
-use Illuminate\Http\Request;
-
-class UserController extends Controller
-{
-    public function index(Request $request)
-    {
-        $perPage = $request->input('per_page', 5);
-        $query = User::query();
-        if ($request->has('category_id')) {
-            $query->where('category_id', $request->input('category_id'));
-        }
-        $users = $query->paginate($perPage);
-        return response()->json([
-            'data' => $users->items(),
-            'meta' => [
-                'current_page' => $users->currentPage(),
-                'last_page' => $users->lastPage(),
-                'per_page' => $users->perPage(),
-                'total' => $users->total(),
-            ]
-        ]);
-    }
-}
-

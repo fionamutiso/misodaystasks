@@ -38,7 +38,7 @@
         </button>
         <NuxtLink
           to="/"
-          class="bg-white/80 backdrop-blur-sm text-pink-600 px-6 py-3 rounded-lg font-semibold border border-pink-200 hover:bg-pink-50 transform hover:scale-105 transition-all duration-300"
+          class="bg-white backdrop-blur-sm text-pink-600 px-6 py-3 rounded-lg font-semibold border border-pink-200 hover:bg-pink-50 transform hover:scale-105 transition-all duration-300"
         >
           Go Home
         </NuxtLink>

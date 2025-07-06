@@ -22,6 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar',
+        'phone',
+        'birth_date',
+        'preferences',
     ];
 
     /**
@@ -44,11 +48,10 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'birth_date' => 'date',
+            'preferences' => 'array',
         ];
     }
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
+
 }
