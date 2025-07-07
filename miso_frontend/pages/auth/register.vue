@@ -196,11 +196,12 @@ const handleRegister = async () => {
 
 <style scoped>
 .bg-gradient-to-br {
-  background: linear-gradient(135deg, #f0b2d4 0%, #f5f4f4 50%, #f7b2d9 100%);
+  background: linear-gradient(135deg,#e6dbe1 0%, #ddc4d6 50%, #e768b0 100%);
 }
 
+
 .dark .bg-gradient-to-br {
-  background: linear-gradient(135deg, #1f2937 0%, #111827 50%, #1f2937 100%);
+  background: linear-gradient(135deg, #33162e 0%, #140413 50%, #4e013e 100%);
 }
 </style>
 

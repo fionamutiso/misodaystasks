@@ -6,15 +6,15 @@
       <!-- Logo/Brand -->
       <div class="mb-8 text-center">
         <h1 class="text-6xl font-bold text-pink-600 dark:text-pink-400 mb-2">Miso Days</h1>
-        <p class="text-xl text-green-500 dark:text-pink-300 font-light">Your journey begins here</p>
+        <p class="text- dark:text-pink-500 font-light">Your journey begins here</p>
       </div>
 
       <!-- Welcome message -->
       <div class="text-center mb-12 max-w-2xl">
-        <h2 class="text-3xl font-semibold text-gray-900 dark:text-gray-200 mb-4">
+        <h2 class="text-3xl font-bold text-gray-600 dark:text-gray-200 mb-4">
           Welcome to a World of Possibilities
         </h2>
-        <p class="text-lg text-gray-800 dark:text-gray-400 leading-relaxed">
+        <p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
            Welcome to Miso Days. Start your day with calm and clear goals. Like cherry blossoms in spring, let your tasks bloom beautifully. Stay organised, feel peaceful, and end each day with gentle joy. 
         </p>
       </div>
@@ -32,9 +32,9 @@
 
       <!-- Decorative elements -->
       <div class="flex space-x-4 mt-8">
-        <div class="w-3 h-3 bg-green-200 dark:bg-pink-500 rounded-full animate-pulse"></div>
-        <div class="w-3 h-3 bg-pink-200 dark:bg-pink-400 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
-        <div class="w-3 h-3 bg-green-300 dark:bg-pink-300 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+        <div class="w-3 h-3 bg-pink-200 dark:bg-pink-500 rounded-full animate-pulse"></div>
+        <div class="w-3 h-3 bg-pink-300 dark:bg-pink-400 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+        <div class="w-3 h-3 bg-pink-400 dark:bg-pink-300 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
       </div>
     </div>
   </div>
@@ -55,11 +55,12 @@ useHead({
 
 <style scoped>
 .bg-gradient-to-br {
-  background: linear-gradient(135deg, #f0b2d4 0%, #f5f4f4 50%, #f7b2d9 100%);
+  background: linear-gradient(135deg,#e6dbe1 0%, #ddc4d6 50%, #e768b0 100%);
 }
 
+
 .dark .bg-gradient-to-br {
-  background: linear-gradient(135deg, #1f2937 0%, #111827 50%, #1f2937 100%);
+  background: linear-gradient(135deg, #33162e 0%, #140413 50%, #4e013e 100%);
 }
 </style>
 

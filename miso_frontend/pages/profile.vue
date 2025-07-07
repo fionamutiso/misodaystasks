@@ -1,10 +1,6 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-pink-50 via-white to-pink-100 dark:from-gray-900 dark:via-gray-800 dark:to-pink-900 relative overflow-hidden">
-    <!-- Background decorations -->
-    <div class="absolute top-0 left-0 w-72 h-72 bg-pink-500 dark:bg-pink-600 rounded-full opacity-50 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 w-72 h-72 bg-pink-500 dark:bg-pink-600 rounded-full opacity-50 blur-3xl"></div>
-    <div class="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-500 dark:bg-pink-600 rounded-full opacity-50 blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
-
+    
     <!-- Header -->
     <header class="relative z-10 bg-white dark:bg-gray-800/80 backdrop-blur-sm border-b border-pink-200 dark:border-gray-700">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,7 +38,7 @@
     <main class="relative z-10 max-w-4xl mx-auto px-4 py-8">
       <!-- Page Header -->
       <div class="text-center mb-8">
-        <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-200 mb-2">Profile Settings</h2>
+        <h2 class="text-3xl font-bold !text-pink-400 dark:text-gray-200 mb-2">Profile Settings</h2>
         <p class="text-gray-600 dark:text-gray-400">Manage your account and preferences</p>
       </div>
 
@@ -454,10 +450,10 @@ definePageMeta({
 
 <style scoped>
 .bg-gradient-to-br {
-  background: linear-gradient(135deg, #f0b2d4 0%, #f5f4f4 50%, #f7b2d9 100%);
+  background: linear-gradient(135deg,#e6dbe1 0%, #ddc4d6 50%, #e768b0 100%);
 }
 
 .dark .bg-gradient-to-br {
-  background: linear-gradient(135deg, #1f2937 0%, #111827 50%, #1f2937 100%);
+  background: linear-gradient(135deg, #33162e 0%, #140413 50%, #4e013e 100%);
 }
 </style> 

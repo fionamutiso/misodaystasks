@@ -14,11 +14,6 @@ export default defineNuxtConfig({
     ]
   },
   
-  // Tailwind configuration
-  tailwindcss: {
-    config: './tailwind.config.js'
-  },
-  
   // App configuration
   app: {
     head: {
