@@ -15,18 +15,18 @@
           Welcome to a World of Possibilities
         </h2>
         <p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-           Welcome to Miso Days. Start your day with calm and clear goals. Like cherry blossoms in spring, let your tasks bloom beautifully. Stay organised, feel peaceful, and end each day with gentle joy. 
+           Welcome to Miso Days. Start your day with calm and clear goals. Let your tasks stay organised, and end each day with gentle joy. 
         </p>
       </div>
 
       <!-- Get Started Button -->
       <div class="mb-8">
-        <NuxtLink 
-          to="/auth/login" 
-          class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-pink-500 to-pink-600 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 overflow-hidden"
+        <NuxtLink
+          to="/auth/login"
+          class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-pink-500 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 overflow-hidden hover:bg-pink-600"
         >
           <span class="relative z-10">Get Started</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-pink-600 to-pink-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-pink-600 to-rose-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </NuxtLink>
       </div>
 
@@ -57,7 +57,6 @@ useHead({
 .bg-gradient-to-br {
   background: linear-gradient(135deg,#e6dbe1 0%, #ddc4d6 50%, #e768b0 100%);
 }
-
 
 .dark .bg-gradient-to-br {
   background: linear-gradient(135deg, #33162e 0%, #140413 50%, #4e013e 100%);
