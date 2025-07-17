@@ -1,40 +1,6 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-pink-50 via-white to-pink-100 dark:from-gray-900 dark:via-gray-800 dark:to-pink-900 relative overflow-hidden">
     
-    <!-- Header -->
-    <header class="relative z-10 bg-white dark:bg-gray-800/80 backdrop-blur-sm border-b border-pink-200 dark:border-gray-700">
-      <div class="w-full px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center py-4">
-          <div class="flex items-center space-x-3">
-            <NuxtLink to="/dashboard" class="flex items-center space-x-3">
-              <div class="w-8 h-8 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full flex items-center justify-center">
-                <span class="text-white font-bold text-sm">M</span>
-              </div>
-              <h1 class="text-2xl font-bold text-pink-600 dark:text-pink-400">Miso Days</h1>
-            </NuxtLink>
-          </div>
-          
-          <div class="flex items-center space-x-4">
-            <NuxtLink 
-              to="/dashboard"
-              class="text-gray-600 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors duration-200"
-            >
-              Dashboard
-            </NuxtLink>
-            <button
-              @click="handleLogout"
-              class="text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-400 transition-colors duration-200"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- Main Content -->
     <main class="relative z-10 max-w-4xl mx-auto px-4 py-8">
       <!-- Page Header -->
       <div class="text-center mb-8">

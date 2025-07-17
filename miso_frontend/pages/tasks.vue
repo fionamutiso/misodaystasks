@@ -1,41 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-pink-50 via-white to-pink-100 dark:from-gray-900 dark:via-gray-800 dark:to-pink-900 relative overflow-hidden">
-    <!-- Header/Nav Bar -->
-    <header class="relative z-10 bg-white dark:bg-gray-800/80 backdrop-blur-sm border-b border-pink-200 dark:border-gray-700">
-      <div class="w-full px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center py-4">
-          <div class="flex items-center space-x-3">
-            <div class="w-8 h-8 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full flex items-center justify-center">
-              <span class="text-white font-bold text-sm">M</span>
-            </div>
-            <h1 class="text-2xl font-bold text-pink-600 dark:text-pink-400">Miso Days</h1>
-          </div>
-          <div class="flex items-center space-x-4">
-            <NuxtLink 
-              to="/dashboard"
-              class="text-gray-600 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors duration-200"
-            >
-              Dashboard
-            </NuxtLink>
-            <NuxtLink 
-              to="/profile"
-              class="text-gray-600 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors duration-200"
-            >
-              Profile
-            </NuxtLink>
-            <button
-              @click="handleLogout"
-              class="text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-pink-500 focus-visible:outline-offset-2"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </header>
-
+  <div class="min-h-screen bg-gradient-to-br from-pink-50 via-white to-pink-100 dark:from-gray-900 dark:via-gray-800 dark:to-pink-900 relative overflow-hidden" :inert="showAddTaskModal ? true : null">
     <main class="relative z-10 max-w-6xl mx-auto px-4 py-8">
       <!-- Page Header -->
       <div class="text-center mb-8">
@@ -159,6 +123,23 @@
               </div>
             </div>
 
+            <!-- Priority Filter -->
+            <div class="flex items-center gap-2 mb-4 justify-center">
+              <button
+                v-for="prio in priorityOptions"
+                :key="prio"
+                @click="priorityFilter = prio"
+                class="px-3 py-1 rounded-full font-medium transition-all duration-200 focus-visible:outline-2 focus-visible:outline-pink-400 focus-visible:outline-offset-2 text-xs"
+                :class="[
+                  priorityFilter === prio
+                    ? 'bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-200 shadow-sm'
+                    : 'bg-white/60 dark:bg-gray-800/40 text-gray-400 dark:text-gray-500',
+                ]"
+              >
+                <span class="ml-0.5">{{ prio }}</span>
+              </button>
+            </div>
+
             <!-- Tasks for Selected Date -->
             <div v-if="selectedDateTasks.length === 0" class="text-center py-12">
               <div class="w-24 h-24 bg-gradient-to-r from-pink-100 to-purple-100 dark:from-pink-900/20 dark:to-purple-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -178,7 +159,7 @@
                 :class="selectedDateTasks.length >= 8 ? 'max-h-96 overflow-y-auto pr-2' : ''"
               >
                 <div
-                  v-for="(todo, index) in sortedTasksByTime"
+                  v-for="(todo, index) in filteredTasksByPriority"
                   :key="todo.id"
                   class="relative group"
                 >
@@ -223,26 +204,31 @@
                               Cancel
                             </button>
                           </div>
-                          <div v-else class="flex items-center space-x-2">
-                            <p 
-                              class="text-base font-medium transition-all duration-200 cursor-pointer hover:text-pink-600 dark:hover:text-pink-400"
-                              :class="todo.completed 
-                                ? 'text-gray-500 dark:text-gray-400 line-through' 
-                                : 'text-gray-800 dark:text-gray-200'"
-                              @click="startTodoEdit(todo)"
-                            >
-                              {{ todo.text }}
-                            </p>
-                            <button
-                              @click="startTodoEdit(todo)"
-                              class="text-gray-400 hover:text-pink-600 dark:hover:text-pink-400 transition-colors duration-200 opacity-0 group-hover:opacity-100 focus-visible:outline-2 focus-visible:outline-pink-500 focus-visible:outline-offset-2"
-                            >
-                              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                              </svg>
-                            </button>
+                          <div v-else class="flex flex-col gap-1">
+                            <div class="flex items-center space-x-2">
+                              <p 
+                                class="text-base font-medium transition-all duration-200 cursor-pointer hover:text-pink-600 dark:hover:text-pink-400"
+                                :class="todo.completed 
+                                  ? 'text-gray-500 dark:text-gray-400 line-through' 
+                                  : 'text-gray-800 dark:text-gray-200'"
+                                @click="startTodoEdit(todo)"
+                              >
+                                {{ todo.text }}
+                              </p>
+                              <button
+                                @click="startTodoEdit(todo)"
+                                class="text-gray-400 hover:text-pink-600 dark:hover:text-pink-400 transition-colors duration-200 opacity-0 group-hover:opacity-100 focus-visible:outline-2 focus-visible:outline-pink-500 focus-visible:outline-offset-2"
+                              >
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                </svg>
+                              </button>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-2 text-xs mt-1">
+                              <span class="px-2 py-0.5 rounded bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-300 font-semibold">{{ todo.category }}</span>
+                              <span class="px-2 py-0.5 rounded bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 font-semibold">{{ todo.priority }}</span>
+                            </div>
                           </div>
-                          
                           <!-- Time display with enhanced styling -->
                           <div class="flex items-center space-x-2 mt-1">
                             <div class="w-1.5 h-1.5 bg-pink-400 rounded-full"></div>
@@ -273,10 +259,11 @@
   </div>
 
 
-
         <!-- Add Task Modal -->
-      <div v-if="showAddTaskModal" class="fixed inset-0 bg-gradient-to-br from-pink-50/80 via-white/80 to-pink-100/80 dark:from-gray-900/80 dark:via-gray-800/80 dark:to-pink-900/80 backdrop-blur-sm flex items-center justify-center z-50" @click="closeAddTaskModal">
-        <div class="bg-white dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl p-6 max-w-md w-full mx-4 border border-pink-100 dark:border-gray-700" @click.stop>
+      <div v-if="showAddTaskModal" class="fixed inset-0 flex items-center justify-center z-50" aria-modal="true" role="dialog" tabindex="-1" @click="closeAddTaskModal">
+        <!-- Opaque background overlay -->
+        <div class="absolute inset-0" style="background: rgba(0,0,0,0.5);"></div>
+        <div class="relative bg-white dark:bg-gray-800/90 rounded-2xl shadow-2xl p-6 max-w-md w-full mx-4 border border-pink-100 dark:border-gray-700" @click.stop>
           <div class="mb-4">
             <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200">
               Add Task for {{ formatSelectedDate }}
@@ -293,7 +280,26 @@
                 placeholder="Enter task description..."
                 class="w-full px-4 py-3 border border-pink-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus-visible:outline-2 focus-visible:outline-pink-500 focus-visible:outline-offset-2"
                 @keyup.enter="addTask"
+                ref="addTaskInput"
               />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Category</label>
+              <select
+                v-model="addTaskCategory"
+                class="w-full px-4 py-3 border border-pink-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus-visible:outline-2 focus-visible:outline-pink-500 focus-visible:outline-offset-2"
+              >
+                <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Priority</label>
+              <select
+                v-model="addTaskPriority"
+                class="w-full px-4 py-3 border border-pink-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus-visible:outline-2 focus-visible:outline-pink-500 focus-visible:outline-offset-2"
+              >
+                <option v-for="prio in priorities" :key="prio" :value="prio">{{ prio }}</option>
+              </select>
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Time</label>
@@ -348,6 +354,30 @@ const editingTodoText = ref('')
 const showAddTaskModal = ref(false)
 const addTaskText = ref('')
 const addTaskTime = ref('')
+const addTaskCategory = ref('Personal')
+const addTaskPriority = ref('Medium')
+const categories = [
+  'Personal',
+  'Work',
+  'Learning',
+  'Selfcare',
+  'Social'
+]
+const priorities = [
+  'High',
+  'Medium',
+  'Low'
+]
+
+// Priority filter state
+const priorityFilter = ref('All')
+const priorityOptions = ['All', 'High', 'Medium', 'Low']
+
+// Filtered tasks by selected priority
+const filteredTasksByPriority = computed(() => {
+  if (priorityFilter.value === 'All') return sortedTasksByTime.value
+  return sortedTasksByTime.value.filter(task => task.priority === priorityFilter.value)
+})
 
 // Computed properties
 const currentMonthYear = computed(() => {
@@ -561,7 +591,17 @@ const closeAddTaskModal = () => {
   addTaskTime.value = ''
 }
 
+const addTaskInput = ref(null)
 
+watch(showAddTaskModal, (val) => {
+  if (val) {
+    nextTick(() => {
+      if (addTaskInput.value) {
+        addTaskInput.value.focus()
+      }
+    })
+  }
+})
 
 const addTask = () => {
   if (!addTaskText.value.trim()) return
@@ -575,7 +615,9 @@ const addTask = () => {
     id: Date.now(),
     text: addTaskText.value.trim(),
     completed: false,
-    createdAt: todoDate.toISOString()
+    createdAt: todoDate.toISOString(),
+    category: addTaskCategory.value,
+    priority: addTaskPriority.value
   }
 
   todos.value.unshift(todo)
